@@ -15,3 +15,9 @@ from .forms import QuestionForm, CommentForm
 def all_questions(request):
     questions = Question.objects.all().order_by('-created_at')
     return render(request, 'pages/quest.html', {'questions': questions})
+
+
+class DetailQuestion(LoginRequiredMixin, DetailView):
+    model = Question
+    template_name = 'pages/detail.html'
+    context_object_name = 'question'
