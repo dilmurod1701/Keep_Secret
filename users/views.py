@@ -19,3 +19,13 @@ class Logout(LogoutView):
 class UserProfile(LoginRequiredMixin, TemplateView):
     login_url = 'login'
     template_name = 'users/profile.html'
+
+
+def signup(request):
+    if request.method == "POST":
+        form = SignUp(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = SignUp()
+    return render(request, 'users/signup.html', context={'form': form})
