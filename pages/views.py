@@ -9,3 +9,9 @@ from .models import Question, Comment
 from .forms import QuestionForm, CommentForm
 
 # Create your views here.
+
+
+@login_required(login_url='login')
+def all_questions(request):
+    questions = Question.objects.all().order_by('-created_at')
+    return render(request, 'pages/quest.html', {'questions': questions})
