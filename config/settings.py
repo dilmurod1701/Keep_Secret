@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['*', '127.0.0.1', '.vercel.app']
 
 INSTALLED_APPS = [
     'pages',
+    'users',
     'crispy_forms',
     'crispy_bootstrap5',
     'django.contrib.admin',
