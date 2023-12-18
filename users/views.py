@@ -10,3 +10,7 @@ from .forms import SignUp
 class Login(LoginView):
     template_name = 'users/login.html'
     next_page = 'question'
+
+
+class Logout(LogoutView):
+    next_page = 'login'
