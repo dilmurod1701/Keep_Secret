@@ -48,3 +48,10 @@ def add_comment(request, pk):
         form = CommentForm()
 
     return render(request, 'pages/add_comment.html', {'form': form})
+
+
+def search(request):
+    query = request.GET.get('q')
+    page_search = Question.objects.filter(Q(hashtag__icontains=query))
+
+    return render(request, 'pages/search.html', {'search': page_search})
