@@ -14,3 +14,8 @@ class Login(LoginView):
 
 class Logout(LogoutView):
     next_page = 'login'
+
+
+class UserProfile(LoginRequiredMixin, TemplateView):
+    login_url = 'login'
+    template_name = 'users/profile.html'
