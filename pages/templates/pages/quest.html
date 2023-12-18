@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'pages/base.html' %}
 
-</body>
-</html>
+{% block heading %}
+    <title>Questions</title>
+{% endblock heading %}
+
+
+{% block content %}
+    <h1>Questions</h1>
+        {% for question in questions %}
+        <div class="card">
+            <div class="card-body">
+                <img src="https://static.xx.fbcdn.net/rsrc.php/v1/yi/r/odA9sNLrE86.jpg">
+            <h1><a href="ques/{{ question.id }}">{{ question.user }}</a></h1>
+            <h3 class="title">{{ question.text }}</h3>
+            <p>Hashtag: {{ question.hashtag }}</p>
+            <p>Likes: {{ question.likes }}</p>
+            <p>{{ question.created_at|date:"Y-m-d H:i:s" }}</p>
+                <h4><a href="{% url 'add-comment' question.id %}">  Add Comment </a></h4>
+                </div>
+        </div>
+        {% endfor %}
+{% endblock content %}
