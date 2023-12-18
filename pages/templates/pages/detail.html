@@ -1,10 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'pages/base.html' %}
 
-</body>
-</html>
+{% block heading %}
+    <title>Detail Question</title>
+{% endblock heading %}
+
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+    <h1>{{ question.user }}</h1>
+    <br> <br>
+        <div class="card-body">
+    <h4>{{ question.text }}</h4>
+    <p>Hashtag: {{ question.hashtag }}</p>
+    <p>Likes: {{ question.likes }}</p>
+    <span class="start">{{ question.created_at|date }}</span>
+        </div>
+    </div>
+</div>
+
+    <br> <br> <br> <br> <br>
+    <h1>Comments...</h1>
+    <p><a class="btn btn-primary" href="{% url 'add-comment' question.id %}">  Add Comment </a></p>
+    {% for comment in question.comments.all %}
+        <div class="card">
+            <div class="card-body">
+        <h4><strong>{{ comment.user }}</strong></h4>
+        <p>{{ comment.text }}</p>
+        <p><small>{{ comment.created_at }}</small></p>
+        {% if request.user.username == comment.user %}
+            <p><a class="btn btn-primary" href="{% url 'add-comment' question.id %}">  Add Comment </a></p>
+        {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock content %}
