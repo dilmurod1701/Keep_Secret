@@ -21,3 +21,11 @@ class DetailQuestion(LoginRequiredMixin, DetailView):
     model = Question
     template_name = 'pages/detail.html'
     context_object_name = 'question'
+
+
+class CreateQuestion(LoginRequiredMixin, CreateView):
+    model = Question
+    form_class = QuestionForm
+    template_name = 'pages/posts.html'
+    success_url = 'ques'
+    login_url = 'login'
