@@ -29,3 +29,22 @@ class CreateQuestion(LoginRequiredMixin, CreateView):
     template_name = 'pages/posts.html'
     success_url = 'ques'
     login_url = 'login'
+
+
+@login_required(login_url='login')
+def add_comment(request, pk):
+    eachquestion = Question.objects.get(id=pk)
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=eachquestion)
+        if form.is_valid():
+            name = request.user
+            body = form.cleaned_data['text']
+            data = Comment(question=eachquestion, user=name, text=body, created_at=datetime.now())
+            data.save()
+            return redirect('question')
+        else:
+            print('form is invalid')
+    else:
+        form = CommentForm()
+
+    return render(request, 'pages/add_comment.html', {'form': form})
