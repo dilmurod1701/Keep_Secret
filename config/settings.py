@@ -82,10 +82,10 @@ WSGI_APPLICATION = 'config.wsgi.app'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'secret',
-        'USER': 'postgres',
-        'PASSWORD': 'hacker',
-        'HOST': 'localhost',
+        'NAME': 'verceldb',
+        'USER': 'default',
+        'PASSWORD': '63ytPqgxTFkA',
+        'HOST': 'ep-flat-snowflake-37663922-pooler.us-east-1.postgres.vercel-storage.com',
     }
 }
 
