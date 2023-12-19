@@ -1,4 +1,4 @@
-## This is show top news in the world
+## This is chat application like stackoverflow. You can add the question and answer the questions
 
 ## How to install
 1. Clone this project
