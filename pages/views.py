@@ -1,7 +1,8 @@
 from datetime import datetime
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView, DetailView
 
@@ -38,8 +39,8 @@ def add_comment(request, pk):
         form = CommentForm(request.POST, instance=eachquestion)
         if form.is_valid():
             name = request.user
-            body = form.cleaned_data['text']
-            data = Comment(question=eachquestion, user=name, text=body, created_at=datetime.now())
+            text = form.cleaned_data['text']
+            data = Comment(question=eachquestion, user=name, text=text, created_at=datetime.now())
             data.save()
             return redirect('question')
         else:
@@ -55,3 +56,10 @@ def search(request):
     page_search = Question.objects.filter(Q(hashtag__icontains=query))
 
     return render(request, 'pages/search.html', {'search': page_search})
+
+
+@login_required(login_url='login')
+def LikeView(request, pk):
+    like = get_object_or_404(Question, id=pk)
+    like.likes.add(request.user)
+    return HttpResponseRedirect('question')

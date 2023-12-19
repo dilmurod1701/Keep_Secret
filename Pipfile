@@ -10,6 +10,7 @@ whitenoise = "*"
 crispy-bootstrap5 = "*"
 django-crispy-forms = "*"
 psycopg2-binary = "*"
+pillow = "*"
 
 [dev-packages]
 
