@@ -61,6 +61,7 @@ def add_comment(request, pk):
     return render(request, 'pages/add_comment.html', {'form': form})
 
 
+@login_required(login_url='login')
 def search(request):
     query = request.GET.get('q')
     page_search = Question.objects.filter(Q(hashtag__icontains=query))
