@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.views.generic import CreateView, DetailView
+from django.views.generic import DetailView
 
 from .models import Question, Comment
 from .forms import QuestionForm, CommentForm
@@ -24,12 +24,22 @@ class DetailQuestion(LoginRequiredMixin, DetailView):
     context_object_name = 'question'
 
 
-class CreateQuestion(LoginRequiredMixin, CreateView):
-    model = Question
-    form_class = QuestionForm
-    template_name = 'pages/posts.html'
-    success_url = 'ques'
-    login_url = 'login'
+@login_required
+def CreateQuestion(request, user_id=None):
+    username = None
+    if user_id:
+        username = Question.objects.get(id=user_id)
+    if request.method == 'POST':
+        form = QuestionForm(request.POST)
+        if form.is_valid():
+            data = form.save(commit=False)
+            data.user = request.user
+            data.parent_tweet = username
+            data.save()
+            return redirect('question')
+    else:
+        form = QuestionForm()
+    return render(request, 'pages/posts.html', {'forms': form})
 
 
 @login_required(login_url='login')
@@ -70,3 +80,4 @@ def migration(request):
     os.system('python3 manage.py makemigrations')
     os.system('python3 manage.py migrate --no-input')
     return HttpResponse('Migration Done')
+
